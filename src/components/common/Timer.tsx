@@ -1,5 +1,5 @@
-import React from 'react';
-import { formatTime } from '../../utils/helper';
+import React from "react";
+import { formatTime } from "../../utils/helper";
 
 interface TimerProps {
   time: number;
@@ -7,7 +7,7 @@ interface TimerProps {
 
 const Timer: React.FC<TimerProps> = ({ time }) => {
   return (
-    <div className="timer">
+    <div className="text-6xl">
       <span>{formatTime(time)}</span>
     </div>
   );

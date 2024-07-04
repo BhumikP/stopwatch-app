@@ -33,8 +33,13 @@ const StopWatch: React.FC = () => {
   }, [isActive, isPaused]);
 
   const handleStart = () => {
-    setIsActive(true);
-    setIsPaused(false);
+    if (stoppedTimes.length > 5) {
+      alert("Please reset your stop watch");
+      return;
+    } else {
+      setIsActive(true);
+      setIsPaused(false);
+    }
   };
 
   const handlePauseResume = () => {
@@ -54,23 +59,39 @@ const StopWatch: React.FC = () => {
   };
 
   return (
-    <div className="stop-watch">
+    <div className="flex flex-col gap-5 relative">
       <Timer time={time} />
-      <div className="control-buttons">
+      <div className="flex gap-4">
         {isActive ? (
           <Button
-            onclick={handlePauseResume}
             label={isPaused ? "Resume" : "Pause"}
+            className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:outline-none "
+            onclick={handlePauseResume}
           />
         ) : (
-          <Button onclick={handleStart} label="Start" />
+          <Button
+            label="Start"
+            className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:outline-none"
+            onclick={handleStart}
+          />
         )}
-        <Button onclick={handleStop} label="Stop" />
-        <Button onclick={handleReset} label="Reset" />
+        <Button
+          label="Stop"
+          className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:outline-none"
+          onclick={handleStop}
+          disabled={!isActive}
+        />
+        <Button
+          label="Reset"
+          className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none"
+          onclick={handleReset}
+        />
       </div>
-      {stoppedTimes?.map((time: number) => (
-        <div key={time}>{formatTime(time)}</div>
-      ))}
+      <div className="m-auto">
+        {stoppedTimes?.map((time: number, index) => (
+          <div key={index}>{formatTime(time)}</div>
+        ))}
+      </div>
     </div>
   );
 };
